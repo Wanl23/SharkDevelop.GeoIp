@@ -5,6 +5,7 @@ using System.Web.Http;
 
 namespace SharkDevelop.GeoIp.Api.Controllers
 {
+    [RoutePrefix("api")]
     public class LocatorController : ApiController
     {
         private readonly IIpLocationRepository _ipLocationRepository;
@@ -22,6 +23,13 @@ namespace SharkDevelop.GeoIp.Api.Controllers
             _ipValidator = ipValidator;
         }
 
+        /// <summary>
+        /// Пойск страны соответствующей приведенному IP
+        /// </summary>
+        /// <param name="ipAddress">Приведенный IP</param>
+        /// <returns>Имя Странны</returns>
+        [Route("LocateCountry")]
+        [HttpGet]
         public async Task<IHttpActionResult> LocateCountryAsync(string ipAddress)
         {
             if (_ipValidator.IsIpValid(ipAddress))
