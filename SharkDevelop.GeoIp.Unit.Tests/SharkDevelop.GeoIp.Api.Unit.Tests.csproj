@@ -74,6 +74,7 @@
   <ItemGroup>
     <Compile Include="Controllers\LocatorControllerTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Validaors\IpValidatorTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

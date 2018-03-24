@@ -4,6 +4,6 @@ namespace SharkDevelop.GeoIp.Api.Validators
 {
     public interface IIpValidator
     {
-        Task<bool> IsIpValidAsync(string ipAddress);
+        bool IsIpValid(string ipAddress);
     }
 }

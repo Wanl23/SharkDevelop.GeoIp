@@ -24,15 +24,17 @@ namespace SharkDevelop.GeoIp.Api.Controllers
 
         public async Task<IHttpActionResult> LocateCountryAsync(string ipAddress)
         {
-            _ipValidator.IsIpValidAsync(ipAddress);
-
-            var country = await _ipLocationRepository.GetCountryNameAsync(ipAddress);
-            if (string.IsNullOrWhiteSpace(country))
+            if (_ipValidator.IsIpValid(ipAddress))
             {
-                return NotFound();
-            }
+                var country = await _ipLocationRepository.GetCountryNameAsync(ipAddress);
+                if (string.IsNullOrWhiteSpace(country))
+                {
+                    return NotFound();
+                }
 
-            return Ok(country);
+                return Ok(country);
+            }
+            return BadRequest();
         }
     }
 }
