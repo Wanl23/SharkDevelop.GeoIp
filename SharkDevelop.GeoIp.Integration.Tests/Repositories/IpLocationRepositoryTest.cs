@@ -18,8 +18,11 @@ namespace SharkDevelop.GeoIp.Api.Integration.Tests.Repositories
         {
             var mongoDbInitializer = new MongoDbInitializer();
             _target = new IpLocationRepository();
-            mongoDbInitializer.Initialize();
-            existingIpLocations = mongoDbInitializer.getIpLocations();
+            if (existingIpLocations == null)
+            {
+                mongoDbInitializer.Initialize();
+                existingIpLocations = mongoDbInitializer.getIpLocations();
+            }
         }
 
         [TestMethod]
