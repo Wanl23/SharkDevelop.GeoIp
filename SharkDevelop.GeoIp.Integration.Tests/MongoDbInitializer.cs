@@ -1,4 +1,6 @@
 ﻿using MongoDB.Bson;
+using MongoDB.Bson.Serialization;
+using MongoDB.Bson.Serialization.IdGenerators;
 using MongoDB.Driver;
 using SharkDevelop.GeoIp.Api.Repositories.Data;
 using System.Collections.Generic;
@@ -13,6 +15,14 @@ namespace SharkDevelop.GeoIp.Api.Integration.Tests
 
         internal void Initialize()
         {
+            BsonClassMap.RegisterClassMap<IpLocation>(cm =>
+            {
+                cm.AutoMap();
+                cm.MapIdProperty(c => c._id)
+                        .SetIgnoreIfDefault(true) //added this line
+                        .SetIdGenerator(ObjectIdGenerator.Instance);
+            });
+
             var connectionString = ConfigurationManager.ConnectionStrings["mongoDb"].ConnectionString;
             var client = new MongoClient(connectionString);
             var geoLocationDb = client.GetDatabase("GeoLocation");
