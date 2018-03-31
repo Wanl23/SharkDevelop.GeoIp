@@ -12,7 +12,6 @@ namespace SharkDevelop.GeoIp.Api.Integration.Tests.Repositories
     {
         private IpLocationRepository _target;
         private List<IpLocation> existingIpLocations;
-        private bool isDbInitialized = false;
 
         [TestInitialize]
         public void Setup()
@@ -42,15 +41,13 @@ namespace SharkDevelop.GeoIp.Api.Integration.Tests.Repositories
             Assert.IsNull(actual);
         }
 
+        [Ignore]
+        [TestMethod]
         private void InitializeDb()
         {
-            if (!isDbInitialized)
-            {
-                var mongoDbInitializer = new MongoDbInitializer();
-                mongoDbInitializer.Initialize();
-                existingIpLocations = mongoDbInitializer.getIpLocations();
-                isDbInitialized = true;
-            }
+            var mongoDbInitializer = new MongoDbInitializer();
+            mongoDbInitializer.Initialize();
+            existingIpLocations = mongoDbInitializer.getIpLocations();
         }
     }
 }
