@@ -28,7 +28,7 @@ namespace SharkDevelop.GeoIp.Api.Controllers
         /// </summary>
         /// <param name="ipAddress">Приведенный IP</param>
         /// <returns>Имя Странны</returns>
-        [Route("LocateCountry")]
+        [Route("LocateCountry/{ipAddress}")]
         [HttpGet]
         public async Task<IHttpActionResult> LocateCountryAsync(string ipAddress)
         {
