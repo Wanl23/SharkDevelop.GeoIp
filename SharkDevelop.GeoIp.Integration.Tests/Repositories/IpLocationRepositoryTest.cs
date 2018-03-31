@@ -17,11 +17,24 @@ namespace SharkDevelop.GeoIp.Api.Integration.Tests.Repositories
     {
         private IpLocationRepository _target;
         private List<IpLocation> existingIpLocations;
+        
+        [ClassInitialize]
+        public static void ClassSetup(TestContext testContext)
+        {
+            BsonClassMap.RegisterClassMap<IpLocation>(cm =>
+            {
+                cm.AutoMap();
+                cm.MapIdProperty(c => c._id)
+                        .SetIgnoreIfDefault(true)
+                        .SetIdGenerator(ObjectIdGenerator.Instance);
+            });
+        }
 
         [TestInitialize]
         public void Setup()
         {
             DbInitialize();
+            existingIpLocations = getIpLocations();
             _target = new IpLocationRepository();
         }
 
@@ -47,23 +60,20 @@ namespace SharkDevelop.GeoIp.Api.Integration.Tests.Repositories
 
         private void DbInitialize()
         {
-            BsonClassMap.RegisterClassMap<IpLocation>(cm =>
-            {
-                cm.AutoMap();
-                cm.MapIdProperty(c => c._id)
-                        .SetIgnoreIfDefault(true)
-                        .SetIdGenerator(ObjectIdGenerator.Instance);
-            });
-
             var connectionString = ConfigurationManager.ConnectionStrings["mongoDb"].ConnectionString;
             var client = new MongoClient(connectionString);
             var geoLocationDb = client.GetDatabase("GeoLocation");
             var collection = geoLocationDb.GetCollection<BsonDocument>("IpLocations");
-
             var ipLocations = getIpLocations();
             foreach (var ipLocation in ipLocations)
             {
-                collection.InsertOne(ipLocation.ToBsonDocument());
+                var filter = Builders<BsonDocument>.Filter.Eq("Ip", ipLocation.Ip);
+
+                var document = collection.Find(filter).ToList().SingleOrDefault();
+                if (document == null)
+                {
+                    collection.InsertOne(ipLocation.ToBsonDocument());
+                }
             }
         }
 
