@@ -24,7 +24,7 @@ namespace SharkDevelop.GeoIp.Api.Repositories
         {
             var filter = Builders<BsonDocument>.Filter.Eq("Ip", ipAddress);
             var cursor = await _collection.FindAsync(filter);
-            var document = cursor.ToList().SingleOrDefault();
+            BsonDocument document = cursor.ToList().SingleOrDefault();
             if (document != null)
             {
                 return BsonSerializer.Deserialize<IpLocation>(document).Country;
