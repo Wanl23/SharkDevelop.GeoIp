@@ -28,7 +28,7 @@ namespace SharkDevelop.GeoIp.Unit.Api.Tests
         }
 
         [TestMethod]
-        public async Task GevenInvalidIpAddress_WhenLocateCountry_ThenReturnBadRequestResult()
+        public async Task GivenInvalidIpAddress_WhenLocateCountry_ThenReturnBadRequestResult()
         {
             var invalidIp = "invalidIp";
             _ipValidator.Setup(x => x.IsIpValid(invalidIp)).Returns(false);
@@ -39,7 +39,7 @@ namespace SharkDevelop.GeoIp.Unit.Api.Tests
         }
 
         [TestMethod]
-        public async Task GevenExistingIpAddress_WhenLocateCountry_ThenReturnOk()
+        public async Task GivenExistingIpAddress_WhenLocateCountry_ThenReturnOk()
         {
             var existingIp = validIp;
             _ipLocationRepositoryMock.Setup(x => x.GetCountryNameAsync(existingIp)).ReturnsAsync("Russia");
@@ -50,7 +50,7 @@ namespace SharkDevelop.GeoIp.Unit.Api.Tests
         }
 
         [TestMethod]
-        public async Task GevenExistingIpAddress_WhenLocateCountry_ThenReturnCountry()
+        public async Task GivenExistingIpAddress_WhenLocateCountry_ThenReturnCountry()
         {
             var existingIp = validIp;
             var expectedCountry = "Russia";
@@ -62,7 +62,7 @@ namespace SharkDevelop.GeoIp.Unit.Api.Tests
         }
 
         [TestMethod]
-        public async Task GevenNotExistingIpAddress_WhenLocateCountry_ThenReturnNotFound()
+        public async Task GivenNotExistingIpAddress_WhenLocateCountry_ThenReturnNotFound()
         {
             var notExistingIp = validIp;
             string notExistingCountry = null;
