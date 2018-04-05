@@ -1,0 +1,21 @@
+﻿@{
+    ViewBag.Title = "IP Locator";
+}
+
+<div class="row">
+    <div class="col-md-4">
+        <h2>Locator IP</h2>
+        <p>
+            Пожалуйста введите IP адресс чтобы найти соответствующую страну.
+        </p>
+        <p>
+            IP Адресс: @Html.TextBox("IpAddress", "", new { id = "txtIpAddress" })
+        </p>
+        <p>
+            <button class="btn btn-default" onclick="locateIp()">Submit</button>
+        </p>
+        <p>
+            Страна соответствующая вводу: @Html.Label("Country", "Введите IP.", new { id = "lblCountry" })
+        </p>
+    </div>
+</div>
